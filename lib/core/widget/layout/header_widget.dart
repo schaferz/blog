@@ -21,22 +21,18 @@ class HeaderWidget extends StatelessWidget {
               ),
             ),
           ),
-        if (!Responsive.isMobile(context))
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Keresés',
-                prefixIcon: const Icon(Icons.search, color: Colors.grey, size: 21),
-              ),
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(
+              hintText: 'Keresés',
+              prefixIcon: const Icon(Icons.search, color: Colors.grey, size: 21),
             ),
           ),
+        ),
         if (Responsive.isMobile(context))
           Row(
             children: [
-              IconButton(
-                icon: const Icon(Icons.search, color: Colors.grey, size: 25),
-                onPressed: () {},
-              ),
+              SizedBox(width: 10),
               InkWell(
                 onTap: () => Scaffold.of(context).openEndDrawer(),
                 child: Icon(Icons.info_outline, color: Colors.grey, size: 25),

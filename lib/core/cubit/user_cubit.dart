@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:blog/core/cubit/user_state.dart';
-import 'package:blog/core/entity/user.dart';
+import 'package:blog/core/model/auth/user.dart';
 
 /// Felhasználókhoz [Cubit].
 ///

@@ -1,5 +1,5 @@
 import 'package:blog/auth/domain/repository/auth_repository.dart';
-import 'package:blog/core/entity/user.dart';
+import 'package:blog/core/model/auth/user.dart';
 import 'package:blog/core/model/common/failure.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show Session, SupabaseClient, AuthException;
@@ -32,6 +32,17 @@ class AuthRepositoryImpl implements AuthRepository {
       }
 
       return right(User.fromJson(response.user!.toJson()));
+    } on AuthException catch (e) {
+      return left(Failure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> signOut() async {
+    try {
+      await _client.auth.signOut();
+
+      return right(null);
     } on AuthException catch (e) {
       return left(Failure(message: e.message));
     }

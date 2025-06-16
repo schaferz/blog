@@ -22,6 +22,11 @@ final class AuthSignInEvent extends AuthEvent {
   }
 }
 
+/// Kijelentkezés esemény.
+final class AuthSignOutEvent extends AuthEvent {
+  const AuthSignOutEvent();
+}
+
 /// Aktuális, bejelentkezett felhasználó elérése esemény.
 final class AuthCurrentUserEvent extends AuthEvent {
   const AuthCurrentUserEvent();

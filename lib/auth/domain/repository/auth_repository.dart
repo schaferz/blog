@@ -1,4 +1,4 @@
-import 'package:blog/core/entity/user.dart';
+import 'package:blog/core/model/auth/user.dart';
 import 'package:blog/core/model/common/failure.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -13,4 +13,7 @@ abstract interface class AuthRepository {
   /// Vissza adja siker esetén, a bejelentkezett felhasználót, egyébként a
   /// [Failure]-t.
   Future<Either<Failure, User>> signIn({required String email, required String password});
+
+  /// Kijelentkeztetés.
+  Future<Either<Failure, void>> signOut();
 }

@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// GetIt példány a függőségek regisztrálásához.
-final di = GetIt.instance;
+final getIt = GetIt.instance;
 
 /// Függőségek előkészítése.
 Future<void> initDependencies() async {
@@ -17,16 +17,16 @@ Future<void> initDependencies() async {
   );
 
   // SupabaseClient
-  di.registerLazySingleton<SupabaseClient>(() => supabase.client);
+  getIt.registerLazySingleton<SupabaseClient>(() => supabase.client);
 
   // AuthRepository
-  di.registerFactory<AuthRepository>(() => AuthRepositoryImpl(client: di<SupabaseClient>()));
+  getIt.registerFactory<AuthRepository>(() => AuthRepositoryImpl(client: getIt<SupabaseClient>()));
 
   // UserCubit
-  di.registerLazySingleton<UserCubit>(() => UserCubit());
+  getIt.registerLazySingleton<UserCubit>(() => UserCubit());
 
   // AuthBloc
-  di.registerLazySingleton<AuthBloc>(
-    () => AuthBloc(repository: di<AuthRepository>(), userCubit: di<UserCubit>()),
+  getIt.registerLazySingleton<AuthBloc>(
+    () => AuthBloc(repository: getIt<AuthRepository>(), userCubit: getIt<UserCubit>()),
   );
 }

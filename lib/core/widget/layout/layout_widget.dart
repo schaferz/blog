@@ -23,20 +23,15 @@ class LayoutWidget extends StatelessWidget {
     final isMobile = Responsive.isMobile(context);
 
     return Scaffold(
-      drawer: !isDesktop
-          ? const SizedBox(width: 250, child: SideMenuWidget())
-          : null,
+      drawer: !isDesktop ? const SizedBox(width: 250, child: SideMenuWidget()) : null,
       endDrawer: isMobile && summary != null
-          ? SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: summary,
-            )
+          ? SizedBox(width: MediaQuery.of(context).size.width * 0.8, child: summary)
           : null,
       body: SafeArea(
         child: Row(
           children: [
             if (isDesktop)
-              Expanded(flex: 2, child: SizedBox(child: SideMenuWidget())),
+              ConstrainedBox(constraints: BoxConstraints(maxWidth: 300), child: SideMenuWidget()),
             Expanded(
               flex: 7,
               child: Align(
