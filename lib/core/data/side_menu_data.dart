@@ -1,4 +1,4 @@
-import 'package:blog/core/model/menu_model.dart';
+import 'package:blog/core/model/ui/menu_model.dart';
 import 'package:flutter/material.dart';
 
 /// Oldalsó menü adatait, elemeit tartalmazó osztály.

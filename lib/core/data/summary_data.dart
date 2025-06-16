@@ -1,4 +1,4 @@
-import 'package:blog/core/model/summary_model.dart';
+import 'package:blog/core/model/ui/summary_model.dart';
 import 'package:flutter/material.dart';
 
 /// Összegzés alapadatok.

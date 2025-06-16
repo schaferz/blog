@@ -1,4 +1,4 @@
-import 'package:blog/core/model/simple_list_item_model.dart';
+import 'package:blog/core/model/ui/simple_list_item_model.dart';
 
 /// Minta utolsó blog bejegyzések adat.
 class RecentBlogData {
