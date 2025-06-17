@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:blog/auth/domain/repository/auth_repository.dart';
 import 'package:blog/auth/presentation/bloc/auth_event.dart';
 import 'package:blog/auth/presentation/bloc/auth_state.dart';
-import 'package:blog/core/cubit/user_cubit.dart';
 import 'package:blog/core/model/auth/user.dart';
 
 /// Authentikációt megvalósító [Bloc].
@@ -12,11 +11,9 @@ import 'package:blog/core/model/auth/user.dart';
 /// Lásd [AuthEvent] és [AuthState].
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _repository;
-  final UserCubit _userCubit;
 
-  AuthBloc({required AuthRepository repository, required UserCubit userCubit})
+  AuthBloc({required AuthRepository repository})
     : _repository = repository,
-      _userCubit = userCubit,
       super(const AuthInitial()) {
     on<AuthEvent>((_, emit) => emit(const AuthLoading()));
     on<AuthSignInEvent>(_signInEvent);
@@ -46,14 +43,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   /// Sikeres bejelentkezés után az [AuthSuccess] esemény mellett, kezeli a
   /// [UserCubit.updateUserState]-et is.
   void _signInSuccess({required User user, required Emitter<AuthState> emmiter}) {
-    _userCubit.updateUserState(user: user);
     emmiter(AuthSuccess(user: user));
   }
 
   /// Sikeres kijelentkezés után az [AuthInitial] esemény mellett, kezeli a
   /// [UserCubit.updateUserState]-et is (null-al).
   void _signOutSuccess({required Emitter<AuthState> emmiter}) {
-    _userCubit.updateUserState(user: null);
     emmiter(AuthInitial());
   }
 }

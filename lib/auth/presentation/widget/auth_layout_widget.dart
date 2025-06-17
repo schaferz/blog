@@ -1,6 +1,6 @@
+import 'package:blog/auth/presentation/bloc/auth_bloc.dart';
+import 'package:blog/auth/presentation/bloc/auth_state.dart';
 import 'package:blog/auth/presentation/screen/login_screen.dart';
-import 'package:blog/core/cubit/user_cubit.dart';
-import 'package:blog/core/cubit/user_state.dart';
 import 'package:blog/core/widget/layout/layout_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,9 +19,9 @@ class AuthLayoutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserCubit, UserState>(
+    return BlocBuilder<AuthBloc, AuthState>(
       builder: (_, state) {
-        return state is UserLoggedIn ? LayoutWidget(main: main, summary: summary) : LoginScreen();
+        return state is AuthSuccess ? LayoutWidget(main: main, summary: summary) : LoginScreen();
       },
     );
   }

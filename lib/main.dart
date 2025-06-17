@@ -1,10 +1,12 @@
+import 'package:blog/auth/data/repository/auth_repository_impl.dart';
+import 'package:blog/auth/domain/repository/auth_repository.dart';
 import 'package:blog/auth/presentation/bloc/auth_bloc.dart';
-import 'package:blog/core/cubit/user_cubit.dart';
 import 'package:blog/core/route/app_routes.dart';
 import 'package:blog/core/theme/app_theme.dart';
 import 'package:blog/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,10 +14,12 @@ Future<void> main() async {
   await initDependencies();
 
   runApp(
-    MultiBlocProvider(
+    MultiRepositoryProvider(
       providers: [
-        BlocProvider<UserCubit>(create: (_) => getIt<UserCubit>()),
-        BlocProvider<AuthBloc>(create: (_) => getIt<AuthBloc>()),
+        RepositoryProvider<AuthRepository>(
+          lazy: false,
+          create: (_) => AuthRepositoryImpl(client: getIt<SupabaseClient>()),
+        ),
       ],
       child: const AppWidget(),
     ),
@@ -27,10 +31,15 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: AppTheme.createThemeData(context),
-      debugShowCheckedModeBanner: false,
-      routes: AppRoutes.createAppRoutes(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(create: (_) => AuthBloc(repository: context.read<AuthRepository>())),
+      ],
+      child: MaterialApp(
+        theme: AppTheme.createThemeData(context),
+        debugShowCheckedModeBanner: false,
+        routes: AppRoutes.createAppRoutes(),
+      ),
     );
   }
 }
