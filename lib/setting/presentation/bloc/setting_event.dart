@@ -8,14 +8,14 @@ sealed class SettingEvent {
 }
 
 /// Beállítás előkészítése, adatok betöltése.
-class SettingLoadEvent extends SettingEvent {
-  const SettingLoadEvent();
+class SettingInitEvent extends SettingEvent {
+  const SettingInitEvent();
 }
 
 /// Beállítások betöltve.
-final class SettingLoaded extends SettingEvent {
+final class SettingLoadedEvent extends SettingEvent {
   /// A betöltött beállítás adat.
   final Setting data;
 
-  const SettingLoaded({required this.data});
+  const SettingLoadedEvent({required this.data});
 }
