@@ -18,10 +18,10 @@ class LoginScreen extends StatefulWidget {
 /// Bejelentkezés képernyőhöz [State].
 class _LoginScreenState extends State<LoginScreen> {
   /// E-mail controller
-  final TextEditingController _email = TextEditingController();
+  final TextEditingController _email = TextEditingController(text: 'demo@kfonix.hu');
 
   /// Password controller
-  final TextEditingController _password = TextEditingController();
+  final TextEditingController _password = TextEditingController(text: 'xxx');
 
   /// Űrlaphoz key.
   final _formKey = GlobalKey<FormState>();

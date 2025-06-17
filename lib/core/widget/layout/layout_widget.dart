@@ -31,7 +31,7 @@ class LayoutWidget extends StatelessWidget {
         child: Row(
           children: [
             if (isDesktop)
-              ConstrainedBox(constraints: BoxConstraints(maxWidth: 300), child: SideMenuWidget()),
+              ConstrainedBox(constraints: BoxConstraints(maxWidth: 250), child: SideMenuWidget()),
             Expanded(
               flex: 7,
               child: Align(

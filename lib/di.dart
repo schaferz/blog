@@ -2,6 +2,8 @@ import 'package:blog/auth/data/repository/auth_repository_impl.dart';
 import 'package:blog/auth/domain/repository/auth_repository.dart';
 import 'package:blog/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog/core/cubit/user_cubit.dart';
+import 'package:blog/setting/data/repository/setting_repository_impl.dart';
+import 'package:blog/setting/domain/repository/setting_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -28,5 +30,15 @@ Future<void> initDependencies() async {
   // AuthBloc
   getIt.registerLazySingleton<AuthBloc>(
     () => AuthBloc(repository: getIt<AuthRepository>(), userCubit: getIt<UserCubit>()),
+  );
+
+  // Setting
+  _initSettingDependencies();
+}
+
+/// Setting függőségek előkészítése
+void _initSettingDependencies() {
+  getIt.registerFactory<SettingRepository>(
+    () => SettingRepositoryImpl(client: getIt<SupabaseClient>()),
   );
 }
