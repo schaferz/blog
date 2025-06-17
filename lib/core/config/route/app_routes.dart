@@ -1,6 +1,6 @@
 import 'package:blog/blog/presentation/screen/blog_screen.dart';
 import 'package:blog/main/presentation/screen/main_screen.dart';
-import 'package:blog/setting/presentation/screen/setting_screen.dart';
+import 'package:blog/setting/setting.dart';
 import 'package:blog/user/presentation/screen/user_screen.dart';
 import 'package:flutter/material.dart';
 

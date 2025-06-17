@@ -23,6 +23,7 @@ Future<void> main() async {
   );
 }
 
+/// Alkalmazás widget mely az [AuthBloc]-ot globálisan provide-olja.
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 

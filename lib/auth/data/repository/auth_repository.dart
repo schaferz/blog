@@ -1,4 +1,4 @@
-import 'package:blog/auth/domain/entity/user.dart';
+import 'package:blog/auth/auth.dart';
 import 'package:blog/core/core.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:rxdart/rxdart.dart';
