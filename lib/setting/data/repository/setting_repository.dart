@@ -1,16 +1,16 @@
 import 'package:blog/core/core.dart';
-import 'package:blog/setting/domain/entity/setting.dart';
-import 'package:blog/setting/domain/repository/setting_repository.dart';
+import 'package:blog/setting/data/entity/setting.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SettingRepositoryImpl implements SettingRepository {
+/// Beállítások repository az eléréshez és karbantartáshoz szükséges funkciókkal.
+class SettingRepository {
   /// Supabase kommunikációhoz kliens.
   final SupabaseClient _client;
 
-  SettingRepositoryImpl({required SupabaseClient client}) : _client = client;
+  SettingRepository({required SupabaseClient client}) : _client = client;
 
-  @override
+  /// Beállítások elérése adott e-mail-el rendelkező felhasználóhoz.
   Future<Either<Failure, Setting>> getSettingByEmail({required String email}) async {
     try {
       final result = await _client.from('setting').select('*').eq("email", email);
@@ -21,7 +21,7 @@ class SettingRepositoryImpl implements SettingRepository {
     }
   }
 
-  @override
+  /// Setting beállítása.
   Future<Either<Failure, Setting>> updateSetting({required Setting setting}) async {
     try {
       final result = await _client.from('setting').upsert(setting.toJson());
