@@ -1,5 +1,4 @@
-import 'package:blog/core/data/chart_data.dart';
-import 'package:blog/core/theme/app_theme.dart';
+import 'package:blog/core/core.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -30,9 +29,11 @@ class MainPieChartWidget extends StatelessWidget {
                 const SizedBox(height: AppTheme.defaultPadding),
                 Text(
                   "70%",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.headlineMedium!.copyWith(color: Colors.white, fontWeight: FontWeight.w600, height: 0.5),
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    height: 0.5,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 const Text("100%-ból"),

@@ -1,4 +1,4 @@
-import 'package:blog/core/model/auth/user.dart';
+import 'package:blog/auth/domain/entity/user.dart';
 import 'package:flutter/foundation.dart';
 
 /// Közös ős a különböző Auth állapotokhoz.

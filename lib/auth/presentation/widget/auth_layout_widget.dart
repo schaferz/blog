@@ -1,7 +1,7 @@
 import 'package:blog/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog/auth/presentation/bloc/auth_state.dart';
 import 'package:blog/auth/presentation/screen/login_screen.dart';
-import 'package:blog/core/widget/layout/layout_widget.dart';
+import 'package:blog/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +20,7 @@ class AuthLayoutWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
+      buildWhen: (prev, current) => prev != current,
       builder: (_, state) {
         return state is AuthSuccess ? LayoutWidget(main: main, summary: summary) : LoginScreen();
       },

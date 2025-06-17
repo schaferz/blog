@@ -1,9 +1,9 @@
 import 'package:blog/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog/auth/presentation/bloc/auth_event.dart';
+import 'package:blog/core/config/route/app_routes.dart';
+import 'package:blog/core/config/theme/app_theme.dart';
 import 'package:blog/core/data/side_menu_data.dart';
 import 'package:blog/core/model/ui/menu_model.dart';
-import 'package:blog/core/route/app_routes.dart';
-import 'package:blog/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

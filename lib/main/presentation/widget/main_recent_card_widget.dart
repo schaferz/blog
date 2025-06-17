@@ -1,4 +1,4 @@
-import 'package:blog/core/theme/app_theme.dart';
+import 'package:blog/core/core.dart';
 import 'package:flutter/material.dart';
 
 /// Kártya widget az utolsó post-ok megjelenítéséhez.

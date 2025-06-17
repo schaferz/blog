@@ -1,4 +1,4 @@
-import 'package:blog/core/util/responsive.dart';
+import 'package:blog/core/core.dart';
 import 'package:flutter/material.dart';
 
 /// Általános fejléc mely tartalmazza a keresőt.

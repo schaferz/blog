@@ -1,4 +1,4 @@
-import 'package:blog/core/model/common/failure.dart';
+import 'package:blog/core/core.dart';
 import 'package:blog/setting/domain/entity/setting.dart';
 import 'package:fpdart/fpdart.dart';
 

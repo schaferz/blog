@@ -1,5 +1,5 @@
 import 'package:blog/auth/presentation/widget/auth_layout_widget.dart';
-import 'package:blog/core/theme/app_theme.dart';
+import 'package:blog/core/core.dart';
 import 'package:blog/main/presentation/widget/main_pie_chart_widget.dart';
 import 'package:blog/main/presentation/widget/main_recent_blog_widget.dart';
 import 'package:blog/main/presentation/widget/main_summary_widget.dart';

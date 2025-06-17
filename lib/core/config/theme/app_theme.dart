@@ -1,4 +1,4 @@
-import "package:blog/core/route/no_transitions_builder.dart";
+import 'package:blog/core/config/theme/no_transitions_builder.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import "package:flutter/material.dart";
 

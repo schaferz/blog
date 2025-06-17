@@ -1,4 +1,4 @@
-import 'package:blog/core/data/recent_blog_data.dart';
+import 'package:blog/core/core.dart';
 import 'package:blog/main/presentation/widget/main_recent_card_widget.dart';
 import 'package:flutter/material.dart';
 

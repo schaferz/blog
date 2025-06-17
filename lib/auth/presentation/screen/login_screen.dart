@@ -1,9 +1,7 @@
 import 'package:blog/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blog/auth/presentation/bloc/auth_event.dart';
 import 'package:blog/auth/presentation/bloc/auth_state.dart';
-import 'package:blog/core/theme/app_theme.dart';
-import 'package:blog/core/widget/dialog/error_dialog.dart';
-import 'package:blog/core/widget/misc/loading_indicator.dart';
+import 'package:blog/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

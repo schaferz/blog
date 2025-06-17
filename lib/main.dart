@@ -1,8 +1,5 @@
-import 'package:blog/auth/data/repository/auth_repository_impl.dart';
-import 'package:blog/auth/domain/repository/auth_repository.dart';
-import 'package:blog/auth/presentation/bloc/auth_bloc.dart';
-import 'package:blog/core/route/app_routes.dart';
-import 'package:blog/core/theme/app_theme.dart';
+import 'package:blog/auth/auth.dart';
+import 'package:blog/core/core.dart';
 import 'package:blog/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +15,7 @@ Future<void> main() async {
       providers: [
         RepositoryProvider<AuthRepository>(
           lazy: false,
-          create: (_) => AuthRepositoryImpl(client: getIt<SupabaseClient>()),
+          create: (_) => AuthRepository(client: getIt<SupabaseClient>()),
         ),
       ],
       child: const AppWidget(),

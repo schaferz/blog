@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:blog/auth/domain/entity/user.dart';
 import 'package:blog/auth/domain/repository/auth_repository.dart';
 import 'package:blog/auth/presentation/bloc/auth_event.dart';
 import 'package:blog/auth/presentation/bloc/auth_state.dart';
-import 'package:blog/core/model/auth/user.dart';
 
 /// Authentikációt megvalósító [Bloc].
 ///

@@ -1,5 +1,4 @@
-import 'package:blog/core/data/summary_data.dart';
-import 'package:blog/core/util/responsive.dart';
+import 'package:blog/core/core.dart';
 import 'package:blog/main/presentation/widget/main_summary_card_widget.dart';
 import 'package:flutter/material.dart';
 
