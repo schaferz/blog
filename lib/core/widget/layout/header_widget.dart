@@ -21,14 +21,7 @@ class HeaderWidget extends StatelessWidget {
               ),
             ),
           ),
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: 'Keresés',
-              prefixIcon: const Icon(Icons.search, color: Colors.grey, size: 21),
-            ),
-          ),
-        ),
+        Expanded(child: NavigationAutocomplete()),
         if (Responsive.isMobile(context))
           Row(
             children: [
@@ -40,6 +33,42 @@ class HeaderWidget extends StatelessWidget {
             ],
           ),
       ],
+    );
+  }
+}
+
+/// Menü keresést és navigációt megvalósító autocomplete.
+class NavigationAutocomplete extends StatelessWidget {
+  static List<String> options = List.from(AppRoutes.navigationMap.keys);
+
+  const NavigationAutocomplete({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Autocomplete<String>(
+      displayStringForOption: (option) => AppRoutes.routeNameMap[option] ?? option,
+      optionsBuilder: (TextEditingValue textEditingValue) {
+        if (textEditingValue.text == '') {
+          return const Iterable<String>.empty();
+        }
+        return options.where((String option) {
+          return AppRoutes.routeNameMap[option]!.contains(textEditingValue.text);
+        });
+      },
+      onSelected: (String selection) {
+        AppRoutes.pushByPath(context, selection);
+      },
+      fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+        return TextField(
+          decoration: const InputDecoration(
+            hintText: 'Keresés',
+            prefixIcon: Icon(Icons.search, color: Colors.grey, size: 21),
+          ),
+          // decoratteion: const InputDecoration(border: OutlineInputBorder()),
+          controller: textEditingController,
+          focusNode: focusNode,
+        );
+      },
     );
   }
 }

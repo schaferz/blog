@@ -29,6 +29,14 @@ class AppRoutes {
     settingPath: (context) => pushSetting(context),
   };
 
+  /// Útvonalanként az oldal elnevezése.
+  static Map<String, String> routeNameMap = {
+    mainPath: 'Főoldal',
+    blogPath: 'Blog',
+    userPath: 'Felhasználók',
+    settingPath: 'Beállítások',
+  };
+
   /// Létrehozza az alkalmazás útvonalakat.
   static Map<String, WidgetBuilder> createAppRoutes() => {
     mainPath: (_) => const MainScreen(),

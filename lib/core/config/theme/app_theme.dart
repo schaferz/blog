@@ -70,8 +70,9 @@ abstract class AppTheme {
               },
       ),
       cardTheme: CardThemeData(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))
-      )
+        color: AppTheme.cardBackgroundColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      ),
     );
   }
 }
