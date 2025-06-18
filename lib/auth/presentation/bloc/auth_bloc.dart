@@ -17,8 +17,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignOutEvent>(_signOutEvent);
   }
 
+  /// Aktuális felhasználó e-mail cím, ha bejelentkezett állapotban vagyunk, egyébként üres String.
+  get userEmail {
+    if (state is AuthSuccess) {
+      return (state as AuthSuccess).user.email;
+    } else {
+      return '';
+    }
+  }
+
   /// Lásd [AuthSignInEvent].
-  FutureOr<void> _signInEvent(AuthSignInEvent event, Emitter<AuthState> emmiter) async {
+  Future<void> _signInEvent(AuthSignInEvent event, Emitter<AuthState> emmiter) async {
     final result = await _repository.signIn(email: event.email, password: event.password);
 
     result.fold(
@@ -28,7 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   /// Lásd [AuthSignOutEvent].
-  FutureOr<void> _signOutEvent(AuthSignOutEvent event, Emitter<AuthState> emmiter) async {
+  Future<void> _signOutEvent(AuthSignOutEvent event, Emitter<AuthState> emmiter) async {
     final result = await _repository.signOut();
 
     result.fold(

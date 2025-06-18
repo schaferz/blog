@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fpdart/fpdart.dart';
 
 /// Beállítások entitás mely tárolja adott felhasználóhoz az alkalmazás megjelenését, működését
 /// személyre szabó értékeket.
@@ -27,9 +28,9 @@ class Setting extends Equatable {
   factory Setting.fromJson(Map<String, dynamic> json) => Setting(
     id: json['id'],
     email: json['email'],
-    displayName: json['display_name'],
+    displayName: json['display_name'] ?? json['displayName'],
     theme: json['theme'],
-    accessibleMode: json['accessible_mode'],
+    accessibleMode: json['accessible_mode'] ?? json['accessibleMode'],
   );
 
   /// JSON létrehozása a kapott [Setting] alapján.
@@ -39,5 +40,5 @@ class Setting extends Equatable {
     'display_name': displayName,
     'theme': theme,
     'accessible_mode': accessibleMode,
-  };
+  }.filter((v) => v != null);
 }

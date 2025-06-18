@@ -7,6 +7,9 @@ import 'package:blog/setting/presentation/bloc/setting_event.dart';
 import 'package:blog/setting/presentation/bloc/setting_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Típus definició [SettingState] alapú [Emitter]-hez.
+typedef SettingEmmiter = Emitter<SettingState>;
+
 /// Beállítások kezelését megvalósító [Bloc].
 ///
 /// Lásd [SettingEvent], [SettingState].
@@ -23,11 +26,11 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
       super(SettingInitial()) {
     on<SettingEvent>((_, emit) => emit(const SettingLoading()));
     on<SettingInitEvent>(_initEvent);
-    on<SettingLoadedEvent>(_loadedEvent);
+    on<SettingSaveEvent>(_saveEvent);
   }
 
   /// Lásd [SettingInitEvent].
-  FutureOr<void> _initEvent(SettingInitEvent event, Emitter<SettingState> emmiter) async {
+  Future<void> _initEvent(SettingInitEvent event, SettingEmmiter emmiter) async {
     final user = await _authRepository.user.first;
     final result = await _repository.getSettingByEmail(email: user!.email);
 
@@ -40,6 +43,13 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     });
   }
 
-  /// Lásd [SettingLoadedEvent].
-  FutureOr<void> _loadedEvent(SettingLoadedEvent event, Emitter<SettingState> emmiter) async {}
+  /// Lásd [SettingSaveEvent].
+  Future<void> _saveEvent(SettingSaveEvent event, SettingEmmiter emmiter) async {
+    final result = await _repository.updateSetting(setting: event.data);
+
+    result.fold(
+      (l) => emmiter(SettingFailure(message: l.message, setting: event.data)),
+      (r) => emmiter(SettingLoaded(setting: r)),
+    );
+  }
 }

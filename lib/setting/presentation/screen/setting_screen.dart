@@ -1,10 +1,14 @@
+import 'dart:developer' show log;
+
 import 'package:blog/auth/auth.dart';
 import 'package:blog/core/core.dart';
 import 'package:blog/di.dart';
+import 'package:blog/setting/data/entity/setting.dart';
 import 'package:blog/setting/data/repository/setting_repository.dart';
 import 'package:blog/setting/presentation/bloc/setting_bloc.dart';
 import 'package:blog/setting/presentation/bloc/setting_event.dart';
 import 'package:blog/setting/presentation/bloc/setting_state.dart';
+import 'package:blog/setting/presentation/widget/setting_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -36,15 +40,36 @@ class SettingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingBloc, SettingState>(
+    return BlocConsumer<SettingBloc, SettingState>(
+      listener: (context, state) {
+        if (state is SettingFailure) {
+          ErrorDialog.showErrorDialog(context, state.message);
+        }
+      },
       builder: (context, state) {
+        Setting? setting;
+
         if (state is SettingLoading) {
           return LoadingIndicator();
         } else if (state is SettingLoaded) {
-          return AuthLayoutWidget(main: Text('E-mail: ${state.setting.email}'));
+          setting = state.setting;
+        } else if (state is SettingFailure) {
+          setting = state.setting;
         }
 
-        return Placeholder();
+        if (setting != null) {
+          return AuthLayoutWidget(
+            main: SettingForm(
+              onSave: (data) {
+                log('onSave: SettingSaveEvent');
+                context.read<SettingBloc>().add(SettingSaveEvent(data: data));
+              },
+              data: setting,
+            ),
+          );
+        }
+
+        return const Placeholder();
       },
     );
   }

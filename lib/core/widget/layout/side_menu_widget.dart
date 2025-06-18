@@ -21,13 +21,24 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
   @override
   Widget build(BuildContext context) {
     final data = SideMenuData();
+    final email = context.select((AuthBloc bloc) => bloc.userEmail);
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 20),
+      padding: const EdgeInsets.only(top: 80, left: 20, bottom: 20, right: 20),
       color: const Color(0xFF171821),
-      child: ListView.builder(
-        itemCount: data.menu.length,
-        itemBuilder: (context, index) => buildMenuEntry(context, data, index),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: data.menu.length,
+              itemBuilder: (context, index) => buildMenuEntry(context, data, index),
+            ),
+          ),
+          Text(
+            email,
+            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
+          ),
+        ],
       ),
     );
   }

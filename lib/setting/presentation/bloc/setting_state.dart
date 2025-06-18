@@ -30,5 +30,8 @@ final class SettingFailure extends SettingState {
   /// A hiba részletei.
   final String message;
 
-  const SettingFailure({required this.message});
+  /// A betöltött beállítás.
+  final Setting? setting;
+
+  const SettingFailure({required this.message, this.setting});
 }

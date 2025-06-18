@@ -1,5 +1,6 @@
 import 'package:blog/core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 /// Hiba dialógus szöveggel ([message]).
 class ErrorDialog extends StatelessWidget {
@@ -31,9 +32,11 @@ class ErrorDialog extends StatelessWidget {
 
   /// Dialógus megjelenítése a kapott szöveggel ([message]).
   static showErrorDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (_) => ErrorDialog(message: message),
-    );
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+        context: context,
+        builder: (_) => ErrorDialog(message: message),
+      );
+    });
   }
 }

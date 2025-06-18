@@ -19,6 +19,9 @@ abstract class AppTheme {
   /// Kártya háttérszín.
   static const cardBackgroundColor = Color(0xFF21222D);
 
+  /// Beviteli mezők háttérszín.
+  static const inputBackgroundColor = Color(0xFF2F313E);
+
   /// Kijelölés színe.
   static const selectionColor = Color(0xFFD5D5D5);
 
@@ -31,11 +34,14 @@ abstract class AppTheme {
   /// Material [ThemeData] létrehozása, mely meghatározza az alkalmazás megjelenését.
   static ThemeData createThemeData(BuildContext context) {
     return ThemeData(
-      brightness: Brightness.dark,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: AppTheme.primaryColor,
+        brightness: Brightness.dark,
+      ),
       scaffoldBackgroundColor: AppTheme.backgroundColor,
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppTheme.cardBackgroundColor,
+        fillColor: AppTheme.inputBackgroundColor,
         enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
         focusedBorder: OutlineInputBorder(
@@ -63,6 +69,9 @@ abstract class AppTheme {
                 TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
               },
       ),
+      cardTheme: CardThemeData(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))
+      )
     );
   }
 }

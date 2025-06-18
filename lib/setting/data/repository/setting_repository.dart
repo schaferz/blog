@@ -29,9 +29,9 @@ class SettingRepository {
   /// Setting beállítása.
   Future<Either<Failure, Setting>> updateSetting({required Setting setting}) async {
     try {
-      final result = await _client.from('setting').upsert(setting.toJson());
+      await _client.from('setting').upsert(setting.toJson(), onConflict: 'id').select();
 
-      return right(Setting.fromJson(result.first));
+      return right(setting);
     } on Exception catch (e) {
       return left(Failure(message: e.toString()));
     }
