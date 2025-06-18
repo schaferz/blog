@@ -256,6 +256,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
+  kfonix_ui:
+    dependency: "direct main"
+    description:
+      path: "packages/kfonix_ui"
+      relative: true
+    source: path
+    version: "0.0.1"
   leak_tracker:
     dependency: transitive
     description:

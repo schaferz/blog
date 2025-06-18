@@ -13,21 +13,15 @@ class Setting extends Equatable {
   final String? displayName;
 
   /// A használni kívánt téma.
-  final String theme;
+  final String? theme;
 
   /// Akadály mentes mód aktív-e?
-  final bool accessibleMode;
+  final bool? accessibleMode;
 
   @override
   List<Object?> get props => [id, email, displayName, theme, accessibleMode];
 
-  const Setting({
-    this.id,
-    required this.email,
-    this.displayName,
-    required this.theme,
-    required this.accessibleMode,
-  });
+  const Setting({this.id, required this.email, this.displayName, this.theme, this.accessibleMode});
 
   /// [Setting] létrehozása a kapott [json] alapján.
   factory Setting.fromJson(Map<String, dynamic> json) => Setting(

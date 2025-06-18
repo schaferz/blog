@@ -1,3 +1,4 @@
+import 'package:blog/setting/data/entity/setting.dart';
 import 'package:flutter/foundation.dart';
 
 /// Beállítás közös állapot.
@@ -14,4 +15,20 @@ final class SettingInitial extends SettingState {
 /// Beállítás betöltés alatt.
 final class SettingLoading extends SettingState {
   const SettingLoading();
+}
+
+/// Beállítás betöltve.
+final class SettingLoaded extends SettingState {
+  /// A betöltött beállítás.
+  final Setting setting;
+
+  const SettingLoaded({required this.setting});
+}
+
+/// Sikertelen betöltés utáni állapot.
+final class SettingFailure extends SettingState {
+  /// A hiba részletei.
+  final String message;
+
+  const SettingFailure({required this.message});
 }

@@ -19,3 +19,11 @@ final class SettingLoadedEvent extends SettingEvent {
 
   const SettingLoadedEvent({required this.data});
 }
+
+/// Beállítás mentés esemény.
+class SettingSaveEvent extends SettingEvent {
+  /// A mentendő adat..
+  final Setting data;
+
+  const SettingSaveEvent({required this.data});
+}

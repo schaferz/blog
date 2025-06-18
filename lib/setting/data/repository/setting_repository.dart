@@ -11,11 +11,16 @@ class SettingRepository {
   SettingRepository({required SupabaseClient client}) : _client = client;
 
   /// Beállítások elérése adott e-mail-el rendelkező felhasználóhoz.
-  Future<Either<Failure, Setting>> getSettingByEmail({required String email}) async {
+  Future<Either<Failure, Setting?>> getSettingByEmail({required String email}) async {
     try {
       final result = await _client.from('setting').select('*').eq("email", email);
+      Setting? resultEntity;
 
-      return right(Setting.fromJson(result.first));
+      if (result.isNotEmpty) {
+        resultEntity = Setting.fromJson(result.first);
+      }
+
+      return right(resultEntity);
     } on Exception catch (e) {
       return left(Failure(message: e.toString()));
     }
