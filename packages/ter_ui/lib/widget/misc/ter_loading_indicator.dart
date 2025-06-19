@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 /// Folyamatot, tipikusan betöltést jelző widget.
-class LoadingIndicator extends StatefulWidget {
-  const LoadingIndicator({super.key});
+class TerLoadingIndicator extends StatefulWidget {
+  const TerLoadingIndicator({super.key});
 
   @override
-  State<LoadingIndicator> createState() => _LoadingIndicatorState();
+  State<TerLoadingIndicator> createState() => _LoadingIndicatorState();
 }
 
-class _LoadingIndicatorState extends State<LoadingIndicator> with TickerProviderStateMixin {
+class _LoadingIndicatorState extends State<TerLoadingIndicator> with TickerProviderStateMixin {
   late AnimationController controller;
 
   @override

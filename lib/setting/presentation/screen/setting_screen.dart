@@ -1,5 +1,3 @@
-import 'dart:developer' show log;
-
 import 'package:blog/auth/auth.dart';
 import 'package:blog/core/core.dart';
 import 'package:blog/di.dart';
@@ -12,11 +10,13 @@ import 'package:blog/setting/presentation/widget/setting_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:ter_ui/ter_ui.dart';
 
 /// Beállítások képernyő.
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
+  /// [SettingRepository] és [SettingBloc] inject, valamint [SettingInitEvent] esemény kiváltása.
   @override
   Widget build(BuildContext context) {
     // inject repository
@@ -50,7 +50,7 @@ class SettingContent extends StatelessWidget {
         Setting? setting;
 
         if (state is SettingLoading) {
-          return LoadingIndicator();
+          return TerLoadingIndicator();
         } else if (state is SettingLoaded) {
           setting = state.setting;
         } else if (state is SettingFailure) {
@@ -61,7 +61,6 @@ class SettingContent extends StatelessWidget {
           return AuthLayoutWidget(
             main: SettingForm(
               onSave: (data) {
-                log('onSave: SettingSaveEvent');
                 context.read<SettingBloc>().add(SettingSaveEvent(data: data));
               },
               data: setting,

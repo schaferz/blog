@@ -1,9 +1,6 @@
-import 'dart:developer' show log;
-
 import 'package:blog/setting/data/entity/setting.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:ter_ui/ter_ui.dart';
 
 /// Téma opciók.
 final List<DropdownMenuItem<String>> themeOptions = [
@@ -17,78 +14,33 @@ class SettingForm extends StatelessWidget {
   final Setting data;
 
   /// Mentés eseményre hívandó akció.
-  final Function(Setting)? onSave;
+  final Function(Setting) onSave;
 
   /// Űrlaphoz key.
-  final _formKey = GlobalKey<FormBuilderState>();
+  final _formKey = GlobalKey<TerFormState<Setting>>();
 
-  SettingForm({super.key, required this.data, this.onSave});
+  SettingForm({super.key, required this.data, required this.onSave});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        constraints: BoxConstraints(maxWidth: 450),
-        child: Padding(
-          padding: EdgeInsetsGeometry.all(20.0),
-          child: FormBuilder(
-            key: _formKey,
-            initialValue: data.toJson(),
-            child: Column(
-              children: [
-                // Beállítások
-                Row(children: [Text('Beállítások', style: TextStyle(fontSize: 18.0))]),
-                SizedBox(height: 24),
-                FormBuilderTextField(
-                  name: 'email',
-                  enabled: false,
-                  decoration: const InputDecoration(labelText: 'E-mail', hintText: 'E-mail'),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.email(),
-                  ]),
-                ),
-                const SizedBox(height: 15),
-                // Megjelenített név
-                FormBuilderTextField(
-                  name: 'display_name',
-                  decoration: const InputDecoration(labelText: 'Megjelenített név'),
-                ),
-                const SizedBox(height: 15),
-                // Téma
-                FormBuilderDropdown(
-                  name: 'theme',
-                  items: themeOptions,
-                  decoration: const InputDecoration(labelText: 'Téma'),
-                ),
-                const SizedBox(height: 15),
-                FormBuilderCheckbox(name: 'accessible_mode', title: Text('Akadálymentes mód')),
-                const SizedBox(height: 25),
-                Row(
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.saveAndValidate() ?? false) {
-                          final settingData = _formKey.currentState?.value;
-
-                          log('Validation success: $settingData');
-
-                          if (onSave != null && settingData != null) {
-                            Map<String, dynamic> mergedData = {...data.toJson(), ...settingData};
-
-                            onSave!(Setting.fromJson(mergedData));
-                          }
-                        } else {
-                          log('Validation failed: ${_formKey.currentState?.value.toString()}');
-                        }
-                      },
-                      child: Text('Mentés'),
-                    ),
-                  ],
-                ),
-              ],
+    return TerForm<Setting>(
+      key: _formKey,
+      initialData: data,
+      child: TerPanel(
+        headerText: 'Beállítások',
+        maxWidth: 650,
+        child: Column(
+          spacing: 15,
+          children: [
+            TerTextFormField(name: 'email', enabled: false, labelText: 'E-mail'),
+            TerTextFormField(name: 'display_name', labelText: 'Megjelenített név'),
+            TerDropdownFormField(name: 'theme', items: themeOptions, labelText: 'Téma'),
+            TerCheckboxFormField(name: 'accessible_mode', labelText: 'Akadálymentes mód'),
+            TerEmpty(),
+            Row(
+              children: [TerModelSubmitButton(onSave: onSave, formKey: _formKey)],
             ),
-          ),
+          ],
         ),
       ),
     );

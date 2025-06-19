@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:ter_ui/ter_ui.dart';
 
 /// Beállítások entitás mely tárolja adott felhasználóhoz az alkalmazás megjelenését, működését
 /// személyre szabó értékeket.
-class Setting extends Equatable {
+class Setting extends Equatable implements Model {
   /// Egyedi azonosító.
   final int? id;
 
@@ -24,16 +25,8 @@ class Setting extends Equatable {
 
   const Setting({this.id, required this.email, this.displayName, this.theme, this.accessibleMode});
 
-  /// [Setting] létrehozása a kapott [json] alapján.
-  factory Setting.fromJson(Map<String, dynamic> json) => Setting(
-    id: json['id'],
-    email: json['email'],
-    displayName: json['display_name'] ?? json['displayName'],
-    theme: json['theme'],
-    accessibleMode: json['accessible_mode'] ?? json['accessibleMode'],
-  );
-
   /// JSON létrehozása a kapott [Setting] alapján.
+  @override
   Map<String, dynamic> toJson() => {
     'id': id,
     'email': email,
@@ -41,4 +34,18 @@ class Setting extends Equatable {
     'theme': theme,
     'accessible_mode': accessibleMode,
   }.filter((v) => v != null);
+
+  @override
+  Setting copyWith(Map<String, dynamic> data) {
+    return Setting(
+      id: data['id'] ?? id,
+      email: data['email'] ?? email,
+      displayName: data['display_name'] ?? displayName,
+      theme: data['theme'] ?? theme,
+      accessibleMode: data['accessible_mode'] ?? accessibleMode,
+    );
+  }
+
+  /// [Setting] létrehozása a kapott [json] alapján.
+  factory Setting.fromJson(Map<String, dynamic> json) => Setting(email: '').copyWith(json);
 }

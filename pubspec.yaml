@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  kfonix_ui:
-    path: packages/kfonix_ui
+  ter_ui:
+    path: packages/ter_ui
   bloc: ^9.0.0
   flutter_bloc: ^9.1.1
   supabase_flutter: ^2.9.1
