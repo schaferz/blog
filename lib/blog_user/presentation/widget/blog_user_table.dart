@@ -67,7 +67,6 @@ class _BlogUserTableState extends State<BlogUserTable> {
         ),
       ),
       DataColumn(label: Text('Felhasználónév')),
-      DataColumn(label: Text('E-mail')),
     ];
   }
 
@@ -130,7 +129,6 @@ class _BlogUserTableState extends State<BlogUserTable> {
                 ),
               ),
               DataCell(Text(item.username)),
-              DataCell(Text('${item.email}')),
             ],
           ),
         )
