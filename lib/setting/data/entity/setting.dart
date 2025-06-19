@@ -20,10 +20,10 @@ class Setting extends Equatable implements Model {
   /// Akadály mentes mód aktív-e?
   final bool? accessibleMode;
 
+  const Setting({this.id, required this.email, this.displayName, this.theme, this.accessibleMode});
+
   @override
   List<Object?> get props => [id, email, displayName, theme, accessibleMode];
-
-  const Setting({this.id, required this.email, this.displayName, this.theme, this.accessibleMode});
 
   /// JSON létrehozása a kapott [Setting] alapján.
   @override

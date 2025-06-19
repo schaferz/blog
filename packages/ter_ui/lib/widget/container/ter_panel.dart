@@ -11,7 +11,7 @@ class TerPanel extends StatelessWidget {
   /// Maximum szélesség.
   final double? maxWidth;
 
-  const TerPanel({super.key, required this.headerText, required this.child, this.maxWidth});
+  const TerPanel({super.key, this.headerText = '', required this.child, this.maxWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,9 @@ class TerPanel extends StatelessWidget {
         child: Padding(
           padding: EdgeInsetsGeometry.all(20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [Text(headerText, style: TextStyle(fontSize: 18.0))]),
+              Text(headerText, textAlign: TextAlign.start, style: TextStyle(fontSize: 18.0)),
               const SizedBox(height: 15),
               child,
             ],

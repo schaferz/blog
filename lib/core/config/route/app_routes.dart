@@ -1,7 +1,7 @@
 import 'package:blog/blog/presentation/screen/blog_screen.dart';
+import 'package:blog/blog_user/presentation/screen/blog_user_screen.dart';
 import 'package:blog/main/presentation/screen/main_screen.dart';
 import 'package:blog/setting/setting.dart';
-import 'package:blog/user/presentation/screen/user_screen.dart';
 import 'package:flutter/material.dart';
 
 /// Alkalmazás útvonalak. Tartalmazza az útvonal konstansokat és a routing létrehozásáshoz a
@@ -41,7 +41,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> createAppRoutes() => {
     mainPath: (_) => const MainScreen(),
     blogPath: (_) => const BlogScreen(),
-    userPath: (_) => const UserScreen(),
+    userPath: (_) => const BlogUserScreen(),
     settingPath: (_) => const SettingScreen(),
   };
 
