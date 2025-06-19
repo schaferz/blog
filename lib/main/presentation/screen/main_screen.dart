@@ -13,6 +13,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AuthLayoutWidget(
       main: MainSummaryWidget(),
+      maxDesktopContentWidth: 1200,
       summary: Container(
         decoration: const BoxDecoration(color: AppTheme.cardBackgroundColor),
         child: Padding(
