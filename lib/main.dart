@@ -1,4 +1,5 @@
 import 'package:blog/auth/auth.dart';
+import 'package:blog/core/config/route/router_generator.dart';
 import 'package:blog/core/core.dart';
 import 'package:blog/di.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class AppWidget extends StatelessWidget {
           FormBuilderLocalizations.delegate,
         ],
         debugShowCheckedModeBanner: false,
-        routes: AppRoutes.createAppRoutes(),
+        onGenerateRoute: RouterGenerator.generateRoute,
       ),
     );
   }

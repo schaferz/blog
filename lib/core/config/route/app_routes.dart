@@ -1,7 +1,3 @@
-import 'package:blog/blog/presentation/screen/blog_screen.dart';
-import 'package:blog/blog_user/presentation/screen/blog_user_screen.dart';
-import 'package:blog/main/presentation/screen/main_screen.dart';
-import 'package:blog/setting/setting.dart';
 import 'package:flutter/material.dart';
 
 /// Alkalmazás útvonalak. Tartalmazza az útvonal konstansokat és a routing létrehozásáshoz a
@@ -37,14 +33,6 @@ class AppRoutes {
     settingPath: 'Beállítások',
   };
 
-  /// Létrehozza az alkalmazás útvonalakat.
-  static Map<String, WidgetBuilder> createAppRoutes() => {
-    mainPath: (_) => const MainScreen(),
-    blogPath: (_) => const BlogScreen(),
-    userPath: (_) => const BlogUserScreen(),
-    settingPath: (_) => const SettingScreen(),
-  };
-
   /// Navigáció a kapott útvonalra.
   static void pushByPath(BuildContext context, String path) {
     assert(navigationMap.containsKey(path));
@@ -54,21 +42,21 @@ class AppRoutes {
 
   /// Navigáció a főoldalra.
   static void pushMain(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(mainPath, (route) => false);
+    Navigator.of(context).pushNamed(mainPath);
   }
 
   /// Navigáció a blog oldalra.
   static void pushBlog(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(blogPath, (route) => false);
+    Navigator.of(context).pushNamed(blogPath);
   }
 
   /// Navigáció a felhasználók oldalra.
   static void pushUser(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(userPath, (route) => false);
+    Navigator.of(context).pushNamed(userPath);
   }
 
   /// Navigáció a beállítások oldalra.
   static void pushSetting(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(settingPath, (route) => false);
+    Navigator.of(context).pushNamed(settingPath);
   }
 }
