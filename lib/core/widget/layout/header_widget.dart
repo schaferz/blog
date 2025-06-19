@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 
 /// Általános fejléc mely tartalmazza a keresőt.
 class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({super.key});
+  /// Van-e jobb oldali összegző panel?
+  final bool hasSummary;
+
+  const HeaderWidget({super.key, this.hasSummary = false});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class HeaderWidget extends StatelessWidget {
             ),
           ),
         Expanded(child: NavigationAutocomplete()),
-        if (Responsive.isMobile(context))
+        if (hasSummary && Responsive.isMobile(context))
           Row(
             children: [
               SizedBox(width: 10),

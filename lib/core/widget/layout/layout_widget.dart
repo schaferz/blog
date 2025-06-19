@@ -9,13 +9,21 @@ import 'package:flutter/material.dart';
 /// ([LayoutWidget.main]) és egy opcionális jobb  oldali részt
 /// ([LayoutWidget.summary]).
 class LayoutWidget extends StatelessWidget {
+  /// Maximális szélesség desktop méretű képernyő esetén.
+  final double maxDesktopContentWidth;
+
   /// Az elsődleges tartalom.
   final Widget main;
 
   /// Opcionális jobb oldali, összegző tartalom.
   final Widget? summary;
 
-  const LayoutWidget({super.key, required this.main, this.summary});
+  const LayoutWidget({
+    super.key,
+    required this.main,
+    this.summary,
+    this.maxDesktopContentWidth = double.infinity,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +50,12 @@ class LayoutWidget extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 18),
-                        const HeaderWidget(),
+                        HeaderWidget(hasSummary: summary != null),
                         const SizedBox(height: 18),
-                        main,
+                        Container(
+                          constraints: BoxConstraints(maxWidth: maxDesktopContentWidth),
+                          child: main,
+                        ),
                       ],
                     ),
                   ),

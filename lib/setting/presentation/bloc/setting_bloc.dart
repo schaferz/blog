@@ -36,9 +36,9 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
 
     result.fold((l) => emmiter(SettingFailure(message: l.message)), (r) {
       if (r != null) {
-        return emmiter(SettingLoaded(setting: r));
+        return emmiter(SettingSuccess(setting: r));
       } else {
-        return emmiter(SettingLoaded(setting: Setting(email: user.email)));
+        return emmiter(SettingSuccess(setting: Setting(email: user.email)));
       }
     });
   }
@@ -49,7 +49,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
 
     result.fold(
       (l) => emmiter(SettingFailure(message: l.message, setting: event.data)),
-      (r) => emmiter(SettingLoaded(setting: r)),
+      (r) => emmiter(SettingSuccess(setting: r)),
     );
   }
 }

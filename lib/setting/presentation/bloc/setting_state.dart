@@ -17,12 +17,12 @@ final class SettingLoading extends SettingState {
   const SettingLoading();
 }
 
-/// Beállítás betöltve.
-final class SettingLoaded extends SettingState {
+/// Beállítás betöltve, megfelelő, sikeres állapotban van.
+final class SettingSuccess extends SettingState {
   /// A betöltött beállítás.
   final Setting setting;
 
-  const SettingLoaded({required this.setting});
+  const SettingSuccess({required this.setting});
 }
 
 /// Sikertelen betöltés utáni állapot.

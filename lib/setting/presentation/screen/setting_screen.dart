@@ -51,7 +51,7 @@ class SettingContent extends StatelessWidget {
 
         if (state is SettingLoading) {
           return TerLoadingIndicator();
-        } else if (state is SettingLoaded) {
+        } else if (state is SettingSuccess) {
           setting = state.setting;
         } else if (state is SettingFailure) {
           setting = state.setting;
