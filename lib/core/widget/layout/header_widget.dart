@@ -1,5 +1,6 @@
 import 'package:blog/core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:ter_ui/ter_ui.dart';
 
 /// Általános fejléc mely tartalmazza a keresőt.
 class HeaderWidget extends StatelessWidget {

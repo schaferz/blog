@@ -1,7 +1,7 @@
-import 'package:blog/core/util/responsive.dart';
 import 'package:blog/core/widget/layout/header_widget.dart';
 import 'package:blog/core/widget/layout/side_menu_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:ter_ui/ter_ui.dart';
 
 /// Minden képernyőn használható responzív elrendezést biztosító
 /// [StatelessWidget]. Biztosítja bal oldalon a navigációt támogató

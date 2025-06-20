@@ -1,3 +1,6 @@
+/// Típus definició dinamikus JSON adathoz.
+typedef JsonData = Map<String, dynamic>;
+
 /// UI modell interface, mely biztosítja, hogy a UI modell JSON-é alakítható. Ezen kívül minden
 /// modell rendelkezik egy egyedi kulccsal.
 abstract interface class Model {
@@ -11,9 +14,9 @@ abstract interface class Model {
   /// 	'name': name,
   /// 	}.filter((v) => v != null);
   /// ```
-  Map<String, dynamic> toJson();
+  JsonData toJson();
 
   /// A paraméterül kapott [data] JSON-ben lévő adatokat alkalmazva készít egy másolatot a
   /// modellről.
-  Model copyWith(Map<String, dynamic> data);
+  Model copyWith(JsonData data);
 }
