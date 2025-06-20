@@ -3,12 +3,12 @@ import 'package:ter_ui/ter_ui.dart';
 
 /// Táblázat adatok kezeléséhez widget. A [DataTable]-t [ListView]-ban tartalmazza, így
 /// vertikálisan scroll-ozható. [Model] adatokkal dolgozik, így a sorokat, cellákat és abban
-/// szereplő értékeket automatikusan előállítja a [TerDataColumn.name] segítségével.
+/// szereplő értékeket automatikusan előállítja a [TerColumn.name] segítségével.
 ///
-/// Lásd [TerDataColumn].
+/// Lásd [TerColumn].
 class TerDataTable extends StatelessWidget {
   /// A táblázat oszlopai.
-  final List<TerDataColumn> columns;
+  final List<TerColumn> columns;
 
   /// A megjelenítendő adatok.
   final List<Model> data;
@@ -18,7 +18,7 @@ class TerDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ScreenType screenType = Responsive.getScreenType(context);
-    final List<TerNamedDataColumn> columns = _buildColumns(context, screenType);
+    final List<TerDataColumn> columns = _buildColumns(context, screenType);
     final List<JsonData> dataMap = data.map((e) => e.toJson()).toList();
 
     return ListView(
@@ -34,11 +34,11 @@ class TerDataTable extends StatelessWidget {
   }
 
   /// Oszlopok összeállítása a kapott [screenType] képernyő méretnek megfelelően.
-  List<TerNamedDataColumn> _buildColumns(BuildContext context, ScreenType screenType) {
-    List<TerNamedDataColumn> result = [];
+  List<TerDataColumn> _buildColumns(BuildContext context, ScreenType screenType) {
+    List<TerDataColumn> result = [];
 
-    for (TerDataColumn column in columns) {
-      TerNamedDataColumn? dataColumn = column.buildColumn(context, screenType);
+    for (TerColumn column in columns) {
+      TerDataColumn? dataColumn = column.buildColumn(context, screenType);
 
       if (dataColumn != null) {
         result.add(dataColumn);
@@ -52,23 +52,27 @@ class TerDataTable extends StatelessWidget {
   /// alapján.
   List<DataRow> _buildRows(
     BuildContext context,
-    List<TerNamedDataColumn> columns,
+    List<TerDataColumn> columns,
     List<JsonData> dataMap,
   ) {
     return dataMap.map((element) => _buildRow(context, columns, element)).toList();
   }
 
   /// Sor összeállítása a kapott [columns] oszlop lista és a [data]-ban szereplő adatok alapján.
-  DataRow _buildRow(BuildContext context, List<TerNamedDataColumn> columns, JsonData data) {
-    final cells = columns.map((column) {
-      return _buildCell(column, data[column.name]);
+  DataRow _buildRow(BuildContext context, List<TerDataColumn> columns, JsonData data) {
+    final cells = columns.map((col) {
+      return _buildCell(context, col, data);
     }).toList();
 
     return DataRow(cells: cells);
   }
 
-  /// Cella összeállítása a [column] oszlop és [value] érték alapján.
-  DataCell _buildCell(TerNamedDataColumn column, dynamic value) {
-    return DataCell(Text('$value'));
+  /// Cella összeállítása a [column] oszlop és [data] alapján.
+  DataCell _buildCell(BuildContext context, TerDataColumn column, JsonData data) {
+    if (column.source.cellBuilder != null) {
+      return column.source.cellBuilder!(context, column.source, data);
+    }
+
+    return DataCell(Text('${data[column.source.name]}'));
   }
 }

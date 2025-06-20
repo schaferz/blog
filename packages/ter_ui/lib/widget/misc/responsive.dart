@@ -12,11 +12,11 @@ enum ScreenType {
   desktop,
 }
 
-/// [ScreenType.tablet] és [ScreenType.desktop] lista.
-List<ScreenType> get tabletDesktop => [ScreenType.desktop, ScreenType.tablet];
-
 /// Responzív képernyő létrehozását támogató segédosztály.
 class Responsive {
+  /// [ScreenType.tablet] és [ScreenType.desktop] lista.
+  static final List<ScreenType> tabletDesktop = [ScreenType.desktop, ScreenType.tablet];
+
   /// Mobil méretű-e a képernyő?
   static bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < 750;
 

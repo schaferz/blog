@@ -57,11 +57,27 @@ class BlogUserContent extends StatelessWidget {
         }
 
         if (data != null) {
-          return AuthLayoutWidget(main: BlogUserTable(data: data));
+          return AuthLayoutWidget(
+            main: BlogUserTable(
+              data: data,
+              onInsert: handleInsert,
+              onEdit: handleEdit,
+              onDelete: handleDelete,
+            ),
+          );
         }
 
         return Placeholder();
       },
     );
   }
+
+  /// Hozzáadás esemény kezelése.
+  handleInsert(TerColumn column) {}
+
+  /// Szerkesztés esemény kezelése.
+  handleEdit(TerColumn column, JsonData data) {}
+
+  /// Törlés esemény kezelése.
+  handleDelete(TerColumn column, JsonData data) {}
 }

@@ -4,6 +4,7 @@ import 'package:blog/core/config/config.dart';
 import 'package:blog/main/presentation/screen/main_screen.dart';
 import 'package:blog/setting/presentation/screen/setting_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
 
 /// Útvonalak előállításáért felelős osztály.
 class RouterGenerator {
@@ -41,7 +42,15 @@ class RouterGenerator {
 
   /// Útvonal előállítása a [navigationMap] alapján.
   static Route<dynamic> generateRoute(RouteSettings setting) {
-    final route = navigationMap[setting.name];
+    var route = navigationMap[setting.name];
+
+    if (route == null) {
+      var filtred = navigationMap.keys.filter((r) => r.startsWith(setting.name!));
+
+      if (filtred.isEmpty) {
+        route = navigationMap[filtred.first];
+      }
+    }
 
     if (route == null) {
       throw Exception('Invalid route: ${setting.name}');

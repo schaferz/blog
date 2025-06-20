@@ -21,6 +21,14 @@ final class BlogUserDataLoadedEvent extends BlogUserEvent {
 }
 
 /// Blog felhasználó mentés esemény.
+class BlogUserInsertEvent extends BlogUserEvent {
+  /// A mentendő adat..
+  final BlogUser data;
+
+  const BlogUserInsertEvent({required this.data});
+}
+
+/// Blog felhasználó mentés esemény.
 class BlogUserSaveEvent extends BlogUserEvent {
   /// A mentendő adat..
   final BlogUser data;
