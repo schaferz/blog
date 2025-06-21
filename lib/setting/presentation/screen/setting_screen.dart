@@ -40,12 +40,7 @@ class SettingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SettingBloc, SettingState>(
-      listener: (context, state) {
-        if (state is SettingFailure) {
-          ErrorDialog.showErrorDialog(context, state.message);
-        }
-      },
+    return BlocBuilder<SettingBloc, SettingState>(
       builder: (context, state) {
         Setting? setting;
 
@@ -54,7 +49,7 @@ class SettingContent extends StatelessWidget {
         } else if (state is SettingSuccess) {
           setting = state.setting;
         } else if (state is SettingFailure) {
-          setting = state.setting;
+          return ErrorDialog(message: state.message);
         }
 
         if (setting != null) {

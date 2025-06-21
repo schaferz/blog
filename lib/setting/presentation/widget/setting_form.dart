@@ -28,7 +28,7 @@ class SettingForm extends StatelessWidget {
       initialData: data,
       child: TerPanel(
         headerText: 'Beállítások',
-        maxWidth: 650,
+        maxWidth: 750,
         child: Column(
           spacing: 15,
           children: [
