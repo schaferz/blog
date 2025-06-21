@@ -27,7 +27,7 @@ class TerFunctionColumn extends TerColumn {
       label: IconButton(
         onPressed: () {
           if (onInsert != null) {
-            onInsert!(column);
+            onInsert!(context, column);
           }
         },
         icon: Icon(Icons.add),
@@ -46,7 +46,7 @@ class TerFunctionColumn extends TerColumn {
           IconButton(
             onPressed: () {
               if (onEdit != null) {
-                onEdit!(column, data);
+                onEdit!(context, column, data);
               }
             },
             icon: Icon(Icons.edit),
@@ -58,8 +58,8 @@ class TerFunctionColumn extends TerColumn {
               if (onDelete != null) {
                 final result = await showConfirmDialog(context, 'Biztosan törlöd a tételt?');
 
-                if (result) {
-                  onDelete!(column, data);
+                if (result && context.mounted) {
+                  onDelete!(context, column, data);
                 }
               }
             },

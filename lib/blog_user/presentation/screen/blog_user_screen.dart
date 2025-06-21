@@ -4,6 +4,7 @@ import 'package:blog/blog_user/data/repository/blog_user_repository.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_bloc.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_event.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_state.dart';
+import 'package:blog/blog_user/presentation/screen/blog_user_insert_screen.dart';
 import 'package:blog/blog_user/presentation/widget/blog_user_table.dart';
 import 'package:blog/core/core.dart';
 import 'package:blog/di.dart';
@@ -23,61 +24,59 @@ class BlogUserScreen extends StatelessWidget {
     return RepositoryProvider(
       create: (_) => BlogUserRepository(client: getIt<SupabaseClient>()),
       // inject bloc
-      child: BlocProvider<BlogUserBloc>(
+      child: BlocProvider(
         create: (context) =>
             BlogUserBloc(repository: context.read<BlogUserRepository>())
               ..add(const BlogUserInitEvent()),
-        child: const BlogUserContent(),
+        child: BlocBuilder<BlogUserBloc, BlogUserState>(
+          builder: (context, state) {
+            List<BlogUser>? data;
+
+            if (state is BlogUserLoading) {
+              return TerLoadingIndicator();
+            } else if (state is BlogUserSuccess) {
+              data = state.data;
+            } else if (state is BlogUserFailure) {
+              data = state.data;
+            }
+
+            Widget content;
+
+            if (state is BlogUserFailure) {
+              content = ErrorDialog(message: state.message);
+            } else if (state is BlogUserSuccess) {
+              content = BlogUserTable(
+                data: data!,
+                onInsert: handleInsert,
+                onEdit: handleEdit,
+                onDelete: handleDelete,
+              );
+            } else {
+              content = Placeholder();
+            }
+
+            return AuthLayoutWidget(main: content);
+          },
+        ),
       ),
-    );
-  }
-}
-
-/// Blog felhasználók képernyő tartalma.
-class BlogUserContent extends StatelessWidget {
-  const BlogUserContent({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<BlogUserBloc, BlogUserState>(
-      listener: (context, state) {
-        if (state is BlogUserFailure) {
-          ErrorDialog.showErrorDialog(context, state.message);
-        }
-      },
-      builder: (context, state) {
-        List<BlogUser>? data;
-
-        if (state is BlogUserLoading) {
-          return TerLoadingIndicator();
-        } else if (state is BlogUserSuccess) {
-          data = state.data;
-        } else if (state is BlogUserFailure) {
-          data = state.data;
-        }
-
-        if (data != null) {
-          return AuthLayoutWidget(
-            main: BlogUserTable(
-              data: data,
-              onInsert: handleInsert,
-              onEdit: handleEdit,
-              onDelete: handleDelete,
-            ),
-          );
-        }
-
-        return Placeholder();
-      },
     );
   }
 
   /// Hozzáadás esemény kezelése.
-  handleInsert(TerColumn column) {}
+  handleInsert(BuildContext context, TerColumn column) {
+    final bloc = context.read<BlogUserBloc>();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BlocProvider.value(value: bloc, child: const BlogUserInsertScreen()),
+      ),
+    );
+  }
 
   /// Szerkesztés esemény kezelése.
-  handleEdit(TerColumn column, JsonData data) {}
+  handleEdit(BuildContext context, TerColumn column, JsonData data) {}
 
   /// Törlés esemény kezelése.
-  handleDelete(TerColumn column, JsonData data) {}
+  handleDelete(BuildContext context, TerColumn column, JsonData data) {}
 }

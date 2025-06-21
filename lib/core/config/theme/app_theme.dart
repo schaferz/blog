@@ -1,5 +1,3 @@
-import 'package:blog/core/config/theme/no_transitions_builder.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import "package:flutter/material.dart";
 
 /// Az alkalmazás által használt szín és megjelenést meghatározó konstansok.
@@ -60,15 +58,15 @@ abstract class AppTheme {
           foregroundColor: WidgetStatePropertyAll(AppTheme.foregroundColor),
         ),
       ),
-      pageTransitionsTheme: PageTransitionsTheme(
-        builders: kIsWeb
-            ? {for (final platform in TargetPlatform.values) platform: const NoTransitionsBuilder()}
-            : const {
-                TargetPlatform.android: ZoomPageTransitionsBuilder(),
-                TargetPlatform.windows: NoTransitionsBuilder(),
-                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-              },
-      ),
+      // pageTransitionsTheme: PageTransitionsTheme(
+      //   builders: kIsWeb
+      //       ? {for (final platform in TargetPlatform.values) platform: const NoTransitionsBuilder()}
+      //       : const {
+      //           TargetPlatform.android: ZoomPageTransitionsBuilder(),
+      //           TargetPlatform.windows: NoTransitionsBuilder(),
+      //           TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      //         },
+      // ),
       cardTheme: CardThemeData(
         color: AppTheme.cardBackgroundColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
