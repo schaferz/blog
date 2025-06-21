@@ -6,7 +6,6 @@ import 'package:blog/blog_user/presentation/bloc/blog_user_event.dart';
 import 'package:blog/blog_user/presentation/screen/blog_user_insert_screen.dart';
 import 'package:blog/blog_user/presentation/widget/blog_user_table.dart';
 import 'package:blog/core/config/route/no_transition_page_route.dart';
-import 'package:blog/core/core.dart';
 import 'package:blog/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,44 +19,16 @@ class BlogUserScreen extends StatelessWidget {
   /// [BlogUserRepository] és [BlogUserBloc] inject, valamint [BlogUserInitEvent] esemény kiváltása.
   @override
   Widget build(BuildContext context) {
-    // inject repository
-    return RepositoryProvider(
-      create: (_) => BlogUserRepository(client: getIt<SupabaseClient>()),
-      dispose: (r) => r.dispose(),
-      // inject bloc
-      child: BlocProvider(
-        create: (context) =>
-            BlogUserBloc(repository: context.read<BlogUserRepository>())
-              ..add(const BlogUserInitEvent()),
-        child: BlocBuilder<BlogUserBloc, TerState>(
-          builder: (context, state) {
-            List<BlogUser>? data;
-
-            if (state is TerStateLoading) {
-              return TerLoadingIndicator();
-            } else if (state is TerStateSuccess<BlogUser>) {
-              data = state.data;
-            } else if (state is TerStateFailure<BlogUser> && state.data != null) {
-              data = state.data!;
-            }
-
-            Widget content;
-
-            if (state is TerStateFailure<BlogUser>) {
-              content = ErrorDialog(message: state.error);
-            } else if (state is TerStateSuccess<BlogUser>) {
-              content = BlogUserTable(
-                data: data!,
-                onInsert: handleInsert,
-                onEdit: handleEdit,
-                onDelete: handleDelete,
-              );
-            } else {
-              content = Placeholder();
-            }
-
-            return AuthLayoutWidget(main: content);
-          },
+    return TerProvider(
+      repository: (context) => BlogUserRepository(client: getIt<SupabaseClient>()),
+      bloc: (context) => BlogUserBloc.init(context),
+      child: TerStateHandler<BlogUserBloc, BlogUser>(
+        layout: (context, state, content) => AuthLayoutWidget(main: content),
+        builder: (context, data) => BlogUserTable(
+          data: data,
+          onInsert: handleInsert,
+          onEdit: handleEdit,
+          onDelete: handleDelete,
         ),
       ),
     );
