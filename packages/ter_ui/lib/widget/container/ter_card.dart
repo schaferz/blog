@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Panel widget.
-class TerPanel extends StatelessWidget {
+class TerCard extends StatelessWidget {
   /// Fejléc szöveg.
   final String headerText;
 
@@ -11,7 +11,7 @@ class TerPanel extends StatelessWidget {
   /// Maximum szélesség.
   final double? maxWidth;
 
-  const TerPanel({super.key, this.headerText = '', required this.child, this.maxWidth});
+  const TerCard({super.key, this.headerText = '', required this.child, this.maxWidth});
 
   @override
   Widget build(BuildContext context) {

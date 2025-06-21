@@ -30,7 +30,7 @@ class BlogUserTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TerPanel(
+    return TerCard(
       headerText: 'Blog felhasználók',
       maxWidth: 1200,
       child: TerDataTable(

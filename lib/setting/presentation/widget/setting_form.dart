@@ -26,7 +26,7 @@ class SettingForm extends StatelessWidget {
     return TerForm<Setting>(
       key: _formKey,
       initialData: data,
-      child: TerPanel(
+      child: TerCard(
         headerText: 'Beállítások',
         maxWidth: 750,
         child: Column(
