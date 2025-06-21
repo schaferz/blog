@@ -3,7 +3,6 @@ import 'package:blog/blog_user/data/entity/blog_user.dart';
 import 'package:blog/blog_user/data/repository/blog_user_repository.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_bloc.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_event.dart';
-import 'package:blog/blog_user/presentation/bloc/blog_user_state.dart';
 import 'package:blog/blog_user/presentation/screen/blog_user_insert_screen.dart';
 import 'package:blog/blog_user/presentation/widget/blog_user_table.dart';
 import 'package:blog/core/config/route/no_transition_page_route.dart';
@@ -24,28 +23,29 @@ class BlogUserScreen extends StatelessWidget {
     // inject repository
     return RepositoryProvider(
       create: (_) => BlogUserRepository(client: getIt<SupabaseClient>()),
+      dispose: (r) => r.dispose(),
       // inject bloc
       child: BlocProvider(
         create: (context) =>
             BlogUserBloc(repository: context.read<BlogUserRepository>())
               ..add(const BlogUserInitEvent()),
-        child: BlocBuilder<BlogUserBloc, BlogUserState>(
+        child: BlocBuilder<BlogUserBloc, TerBlocState>(
           builder: (context, state) {
             List<BlogUser>? data;
 
-            if (state is BlogUserLoading) {
+            if (state is TerBlocLoading) {
               return TerLoadingIndicator();
-            } else if (state is BlogUserSuccess) {
+            } else if (state is TerBlocSuccess<BlogUser>) {
               data = state.data;
-            } else if (state is BlogUserFailure) {
-              data = state.data;
+            } else if (state is TerBlocFailure<BlogUser> && state.data != null) {
+              data = state.data!;
             }
 
             Widget content;
 
-            if (state is BlogUserFailure) {
-              content = ErrorDialog(message: state.message);
-            } else if (state is BlogUserSuccess) {
+            if (state is TerBlocFailure<BlogUser>) {
+              content = ErrorDialog(message: state.error);
+            } else if (state is TerBlocSuccess<BlogUser>) {
               content = BlogUserTable(
                 data: data!,
                 onInsert: handleInsert,

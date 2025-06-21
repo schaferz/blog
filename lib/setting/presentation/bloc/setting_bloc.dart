@@ -4,16 +4,16 @@ import 'package:blog/auth/auth.dart';
 import 'package:blog/setting/data/entity/setting.dart';
 import 'package:blog/setting/data/repository/setting_repository.dart';
 import 'package:blog/setting/presentation/bloc/setting_event.dart';
-import 'package:blog/setting/presentation/bloc/setting_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ter_ui/ter_ui.dart';
 
-/// Típus definició [SettingState] alapú [Emitter]-hez.
-typedef SettingEmmiter = Emitter<SettingState>;
+/// Típus definició [TerBlocState] alapú [Emitter]-hez.
+typedef SettingEmmiter = Emitter<TerBlocState>;
 
 /// Beállítások kezelését megvalósító [Bloc].
 ///
-/// Lásd [SettingEvent], [SettingState].
-class SettingBloc extends Bloc<SettingEvent, SettingState> {
+/// Lásd [SettingEvent], [TerBlocState].
+class SettingBloc extends Bloc<SettingEvent, TerBlocState> {
   /// A beállítások repository.
   final SettingRepository _repository;
 
@@ -23,8 +23,8 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
   SettingBloc({required SettingRepository repository, required AuthRepository authRepository})
     : _repository = repository,
       _authRepository = authRepository,
-      super(SettingInitial()) {
-    on<SettingEvent>((_, emit) => emit(const SettingLoading()));
+      super(TerBlocInitial()) {
+    on<SettingEvent>((_, emit) => emit(const TerBlocLoading()));
     on<SettingInitEvent>(_initEvent);
     on<SettingSaveEvent>(_saveEvent);
   }
@@ -34,11 +34,11 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     final user = await _authRepository.user.first;
     final result = await _repository.getSettingByEmail(email: user!.email);
 
-    result.fold((l) => emmiter(SettingFailure(message: l.message)), (r) {
+    result.fold((l) => emmiter(TerBlocFailure(error: l.message)), (r) {
       if (r != null) {
-        return emmiter(SettingSuccess(setting: r));
+        return emmiter(TerBlocSuccess<Setting>([r]));
       } else {
-        return emmiter(SettingSuccess(setting: Setting(email: user.email)));
+        return emmiter(TerBlocSuccess([Setting(email: user.email)]));
       }
     });
   }
@@ -48,8 +48,8 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
     final result = await _repository.updateSetting(setting: event.data);
 
     result.fold(
-      (l) => emmiter(SettingFailure(message: l.message, setting: event.data)),
-      (r) => emmiter(SettingSuccess(setting: r)),
+      (l) => emmiter(TerBlocFailure(error: l.message, data: [event.data])),
+      (r) => emmiter(TerBlocSuccess([r])),
     );
   }
 }

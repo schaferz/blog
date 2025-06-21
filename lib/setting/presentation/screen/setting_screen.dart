@@ -5,7 +5,6 @@ import 'package:blog/setting/data/entity/setting.dart';
 import 'package:blog/setting/data/repository/setting_repository.dart';
 import 'package:blog/setting/presentation/bloc/setting_bloc.dart';
 import 'package:blog/setting/presentation/bloc/setting_event.dart';
-import 'package:blog/setting/presentation/bloc/setting_state.dart';
 import 'package:blog/setting/presentation/widget/setting_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,16 +39,16 @@ class SettingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingBloc, SettingState>(
+    return BlocBuilder<SettingBloc, TerBlocState>(
       builder: (context, state) {
         Setting? setting;
 
-        if (state is SettingLoading) {
+        if (state is TerBlocLoading) {
           return TerLoadingIndicator();
-        } else if (state is SettingSuccess) {
-          setting = state.setting;
-        } else if (state is SettingFailure) {
-          return ErrorDialog(message: state.message);
+        } else if (state is TerBlocSuccess<Setting>) {
+          setting = state.data[0];
+        } else if (state is TerBlocFailure) {
+          return ErrorDialog(message: state.error);
         }
 
         if (setting != null) {

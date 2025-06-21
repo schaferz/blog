@@ -12,12 +12,20 @@ class BlogUserInitEvent extends BlogUserEvent {
   const BlogUserInitEvent();
 }
 
+/// Blog felhasználó hiba esemény.
+class BlogUserFailureEvent extends BlogUserEvent {
+  /// Hibaüzenet.
+  final String message;
+
+  const BlogUserFailureEvent(this.message);
+}
+
 /// Blog felhasználók betöltve.
 final class BlogUserDataLoadedEvent extends BlogUserEvent {
   /// A betöltött blog felhasználók.
   final List<BlogUser> data;
 
-  const BlogUserDataLoadedEvent({required this.data});
+  const BlogUserDataLoadedEvent(this.data);
 }
 
 /// Blog felhasználó mentés esemény.

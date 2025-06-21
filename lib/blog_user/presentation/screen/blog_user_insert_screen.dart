@@ -1,7 +1,8 @@
+import 'package:blog/blog_user/data/entity/blog_user.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_bloc.dart';
-import 'package:blog/blog_user/presentation/bloc/blog_user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ter_ui/bloc/bloc.dart';
 
 class BlogUserInsertScreen extends StatelessWidget {
   const BlogUserInsertScreen({super.key});
@@ -9,7 +10,7 @@ class BlogUserInsertScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<BlogUserBloc>();
-    final state = bloc.state as BlogUserSuccess;
+    final state = bloc.state as TerBlocSuccess<BlogUser>;
 
     return Column(
       children: [
