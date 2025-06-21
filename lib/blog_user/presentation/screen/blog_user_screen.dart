@@ -6,6 +6,7 @@ import 'package:blog/blog_user/presentation/bloc/blog_user_event.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_state.dart';
 import 'package:blog/blog_user/presentation/screen/blog_user_insert_screen.dart';
 import 'package:blog/blog_user/presentation/widget/blog_user_table.dart';
+import 'package:blog/core/config/route/no_transition_page_route.dart';
 import 'package:blog/core/core.dart';
 import 'package:blog/di.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +69,7 @@ class BlogUserScreen extends StatelessWidget {
 
     Navigator.push(
       context,
-      MaterialPageRoute(
+      NoTransitionPageRoute(
         builder: (context) => BlocProvider.value(value: bloc, child: const BlogUserInsertScreen()),
       ),
     );

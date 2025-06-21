@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:blog/blog_user/data/entity/blog_user.dart';
 import 'package:blog/core/core.dart';
 import 'package:fpdart/fpdart.dart';
@@ -12,6 +14,8 @@ class BlogUserRepository {
 
   /// Összes felhasználó listázása.
   Future<Either<Failure, List<BlogUser>>> listUsers() async {
+    log('listUsers');
+
     try {
       final result = await _client.from('blog_user').select('*');
       final userResult = result.map((row) => BlogUser.fromJson(row)).toList();
