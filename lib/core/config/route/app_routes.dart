@@ -42,21 +42,21 @@ class AppRoutes {
 
   /// Navigáció a főoldalra.
   static void pushMain(BuildContext context) {
-    Navigator.of(context).pushNamed(mainPath);
+    Navigator.of(context).pushNamedAndRemoveUntil(mainPath, (_) => false);
   }
 
   /// Navigáció a blog oldalra.
   static void pushBlog(BuildContext context) {
-    Navigator.of(context).pushNamed(blogPath);
+    Navigator.of(context).pushNamedAndRemoveUntil(blogPath, (_) => false);
   }
 
   /// Navigáció a felhasználók oldalra.
   static void pushUser(BuildContext context) {
-    Navigator.of(context).pushNamed(userPath);
+    Navigator.of(context).pushNamedAndRemoveUntil(userPath, (_) => false);
   }
 
   /// Navigáció a beállítások oldalra.
   static void pushSetting(BuildContext context) {
-    Navigator.of(context).pushNamed(settingPath);
+    Navigator.of(context).pushNamedAndRemoveUntil(settingPath, (_) => false);
   }
 }
