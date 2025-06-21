@@ -29,23 +29,23 @@ class BlogUserScreen extends StatelessWidget {
         create: (context) =>
             BlogUserBloc(repository: context.read<BlogUserRepository>())
               ..add(const BlogUserInitEvent()),
-        child: BlocBuilder<BlogUserBloc, TerBlocState>(
+        child: BlocBuilder<BlogUserBloc, TerState>(
           builder: (context, state) {
             List<BlogUser>? data;
 
-            if (state is TerBlocLoading) {
+            if (state is TerStateLoading) {
               return TerLoadingIndicator();
-            } else if (state is TerBlocSuccess<BlogUser>) {
+            } else if (state is TerStateSuccess<BlogUser>) {
               data = state.data;
-            } else if (state is TerBlocFailure<BlogUser> && state.data != null) {
+            } else if (state is TerStateFailure<BlogUser> && state.data != null) {
               data = state.data!;
             }
 
             Widget content;
 
-            if (state is TerBlocFailure<BlogUser>) {
+            if (state is TerStateFailure<BlogUser>) {
               content = ErrorDialog(message: state.error);
-            } else if (state is TerBlocSuccess<BlogUser>) {
+            } else if (state is TerStateSuccess<BlogUser>) {
               content = BlogUserTable(
                 data: data!,
                 onInsert: handleInsert,

@@ -7,12 +7,12 @@ import 'package:blog/blog_user/presentation/bloc/blog_user_event.dart';
 import 'package:ter_ui/bloc/bloc.dart';
 
 /// Típus definició [BlogUserState] alapú [Emitter]-hez.
-typedef BlogUserEmmiter = Emitter<TerBlocState>;
+typedef BlogUserEmmiter = Emitter<TerState>;
 
 /// Blog felhasználók kezelését megvalósító [Bloc].
 ///
 /// Lásd [BlogUserEvent].
-class BlogUserBloc extends Bloc<BlogUserEvent, TerBlocState> {
+class BlogUserBloc extends Bloc<BlogUserEvent, TerState> {
   /// A blog felhasználó repository.
   final BlogUserRepository _repository;
 
@@ -21,8 +21,8 @@ class BlogUserBloc extends Bloc<BlogUserEvent, TerBlocState> {
 
   BlogUserBloc({required BlogUserRepository repository})
     : _repository = repository,
-      super(TerBlocInitial()) {
-    on<BlogUserEvent>((_, emit) => emit(TerBlocLoading()));
+      super(TerStateInitial()) {
+    on<BlogUserEvent>((_, emit) => emit(TerStateLoading()));
     on<BlogUserInitEvent>(_onInit);
     on<BlogUserDataLoadedEvent>(_onLoaded);
 
@@ -39,12 +39,12 @@ class BlogUserBloc extends Bloc<BlogUserEvent, TerBlocState> {
   /// Lásd [BlogUserInitEvent].
   Future<void> _onInit(BlogUserInitEvent event, BlogUserEmmiter emit) async {
     _repository.load();
-    emit(TerBlocLoading());
+    emit(TerStateLoading());
   }
 
   /// Lásd [BlogUserDataLoadedEvent].
   Future<void> _onLoaded(BlogUserDataLoadedEvent event, BlogUserEmmiter emit) async {
-    emit(TerBlocSuccess<BlogUser>(event.data));
+    emit(TerStateSuccess<BlogUser>(event.data));
   }
 
   @override

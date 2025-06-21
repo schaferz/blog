@@ -39,15 +39,15 @@ class SettingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingBloc, TerBlocState>(
+    return BlocBuilder<SettingBloc, TerState>(
       builder: (context, state) {
         Setting? setting;
 
-        if (state is TerBlocLoading) {
+        if (state is TerStateLoading) {
           return TerLoadingIndicator();
-        } else if (state is TerBlocSuccess<Setting>) {
+        } else if (state is TerStateSuccess<Setting>) {
           setting = state.data[0];
-        } else if (state is TerBlocFailure) {
+        } else if (state is TerStateFailure) {
           return ErrorDialog(message: state.error);
         }
 

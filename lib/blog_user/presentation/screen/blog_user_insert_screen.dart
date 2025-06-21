@@ -10,7 +10,7 @@ class BlogUserInsertScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<BlogUserBloc>();
-    final state = bloc.state as TerBlocSuccess<BlogUser>;
+    final state = bloc.state as TerStateSuccess<BlogUser>;
 
     return Column(
       children: [

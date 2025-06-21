@@ -7,13 +7,13 @@ import 'package:blog/setting/presentation/bloc/setting_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ter_ui/ter_ui.dart';
 
-/// Típus definició [TerBlocState] alapú [Emitter]-hez.
-typedef SettingEmmiter = Emitter<TerBlocState>;
+/// Típus definició [TerState] alapú [Emitter]-hez.
+typedef SettingEmmiter = Emitter<TerState>;
 
 /// Beállítások kezelését megvalósító [Bloc].
 ///
-/// Lásd [SettingEvent], [TerBlocState].
-class SettingBloc extends Bloc<SettingEvent, TerBlocState> {
+/// Lásd [SettingEvent], [TerState].
+class SettingBloc extends Bloc<SettingEvent, TerState> {
   /// A beállítások repository.
   final SettingRepository _repository;
 
@@ -23,8 +23,8 @@ class SettingBloc extends Bloc<SettingEvent, TerBlocState> {
   SettingBloc({required SettingRepository repository, required AuthRepository authRepository})
     : _repository = repository,
       _authRepository = authRepository,
-      super(TerBlocInitial()) {
-    on<SettingEvent>((_, emit) => emit(const TerBlocLoading()));
+      super(TerStateInitial()) {
+    on<SettingEvent>((_, emit) => emit(const TerStateLoading()));
     on<SettingInitEvent>(_initEvent);
     on<SettingSaveEvent>(_saveEvent);
   }
@@ -34,11 +34,11 @@ class SettingBloc extends Bloc<SettingEvent, TerBlocState> {
     final user = await _authRepository.user.first;
     final result = await _repository.getSettingByEmail(email: user!.email);
 
-    result.fold((l) => emmiter(TerBlocFailure(error: l.message)), (r) {
+    result.fold((l) => emmiter(TerStateFailure(error: l.message)), (r) {
       if (r != null) {
-        return emmiter(TerBlocSuccess<Setting>([r]));
+        return emmiter(TerStateSuccess<Setting>([r]));
       } else {
-        return emmiter(TerBlocSuccess([Setting(email: user.email)]));
+        return emmiter(TerStateSuccess([Setting(email: user.email)]));
       }
     });
   }
@@ -48,8 +48,8 @@ class SettingBloc extends Bloc<SettingEvent, TerBlocState> {
     final result = await _repository.updateSetting(setting: event.data);
 
     result.fold(
-      (l) => emmiter(TerBlocFailure(error: l.message, data: [event.data])),
-      (r) => emmiter(TerBlocSuccess([r])),
+      (l) => emmiter(TerStateFailure(error: l.message, data: [event.data])),
+      (r) => emmiter(TerStateSuccess([r])),
     );
   }
 }
