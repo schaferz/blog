@@ -10,6 +10,9 @@ mixin TerBlocRepository<T extends Model> implements Disposable {
   /// Adathozzáféréshez stream amit például a bloc használhat.
   ValueStream<List<T>?> get dataStream => _dataSubject.stream;
 
+  /// Az aktuálisan betöltött adatokhoz közvetlen hozzáférés.
+  List<T>? get data => _dataSubject.value;
+
   /// A paraméterben kapott [data] hozzáadása a belső stream-hez.
   void addData(List<T>? data) {
     _dataSubject.add(data);

@@ -4,13 +4,15 @@ import 'package:blog/blog_user/data/repository/blog_user_repository.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_bloc.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_event.dart';
 import 'package:blog/blog_user/presentation/screen/blog_user_insert_screen.dart';
-import 'package:blog/blog_user/presentation/widget/blog_user_table.dart';
 import 'package:blog/core/config/route/no_transition_page_route.dart';
 import 'package:blog/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ter_ui/ter_ui.dart';
+
+/// Tablet és dektop esetén megjelenő oszlopokhoz.
+final tabletDesktop = Responsive.tabletDesktop;
 
 /// Blog felhasználók képernyő.
 class BlogUserScreen extends StatelessWidget {
@@ -24,11 +26,20 @@ class BlogUserScreen extends StatelessWidget {
       bloc: (context) => BlogUserBloc.init(context),
       child: TerStateHandler<BlogUserBloc, BlogUser>(
         layout: (context, state, content) => AuthLayoutWidget(main: content),
-        builder: (context, data) => BlogUserTable(
-          data: data,
-          onInsert: handleInsert,
-          onEdit: handleEdit,
-          onDelete: handleDelete,
+        builder: (context, data) => TerCard(
+          headerText: 'Blog felhasználók',
+          maxWidth: 1200,
+          child: TerDataTable(
+            columns: [
+              TerFunctionColumn(onInsert: handleInsert, onEdit: handleEdit, onDelete: handleDelete),
+              TerColumn(name: 'id', labelText: 'ID', screen: tabletDesktop),
+              TerColumn(name: 'username', labelText: 'Felhasználónév'),
+              TerColumn(name: 'display_name', labelText: 'Név', screen: tabletDesktop),
+              TerColumn(name: 'active', labelText: 'Aktív', screen: tabletDesktop),
+              TerColumn(name: 'created_on', labelText: 'Létrehozva', screen: tabletDesktop),
+            ],
+            data: data,
+          ),
         ),
       ),
     );
@@ -41,7 +52,7 @@ class BlogUserScreen extends StatelessWidget {
     Navigator.push(
       context,
       NoTransitionPageRoute(
-        builder: (context) => BlocProvider.value(value: bloc, child: const BlogUserInsertScreen()),
+        builder: (context) => BlocProvider.value(value: bloc, child: BlogUserInsertScreen()),
       ),
     );
   }

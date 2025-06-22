@@ -22,7 +22,7 @@ final class TerStateSuccess<T extends Model> extends TerState {
   /// A betöltött Blog felhasználó.
   final List<T> data;
 
-  const TerStateSuccess(this.data);
+  const TerStateSuccess({required this.data});
 }
 
 /// Sikertelen betöltés utáni állapot.

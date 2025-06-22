@@ -8,7 +8,7 @@ class TerModelSubmitButton<T extends Model> extends StatelessWidget {
   final GlobalKey<TerFormState<T>> formKey;
 
   /// Mentés eseményre hívandó akció.
-  final Function(T) onSave;
+  final Function(T data) onSave;
 
   const TerModelSubmitButton({super.key, required this.onSave, required this.formKey});
 

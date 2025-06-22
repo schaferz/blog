@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:blog/blog_user/data/entity/blog_user.dart';
 import 'package:blog/blog_user/data/repository/blog_user_repository.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_event.dart';
@@ -28,6 +27,7 @@ class BlogUserBloc extends Bloc<BlogUserEvent, TerState> {
     on<BlogUserInitEvent>(_onInit);
     on<BlogUserDataLoadedEvent>(_onLoaded);
 
+    /// Feliratkozás az adatokat biztosító stream-re
     _subscription = _repository.dataStream.listen((data) {
       if (data != null) {
         add(BlogUserDataLoadedEvent(data));
@@ -35,18 +35,18 @@ class BlogUserBloc extends Bloc<BlogUserEvent, TerState> {
     }, onError: (error) => add(BlogUserFailureEvent(error.toString())));
   }
 
+  /// Factory a kezdő állapot létrehozásához, betöltés elindításához.
   factory BlogUserBloc.init(BuildContext context) =>
       BlogUserBloc(repository: context.read<BlogUserRepository>())..add(const BlogUserInitEvent());
 
   /// Lásd [BlogUserInitEvent].
   Future<void> _onInit(BlogUserInitEvent event, BlogUserEmmiter emit) async {
     _repository.load();
-    emit(TerStateLoading());
   }
 
   /// Lásd [BlogUserDataLoadedEvent].
   Future<void> _onLoaded(BlogUserDataLoadedEvent event, BlogUserEmmiter emit) async {
-    emit(TerStateSuccess<BlogUser>(event.data));
+    emit(TerStateSuccess<BlogUser>(data: event.data));
   }
 
   @override

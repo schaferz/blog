@@ -36,9 +36,9 @@ class SettingBloc extends Bloc<SettingEvent, TerState> {
 
     result.fold((l) => emmiter(TerStateFailure(error: l.message)), (r) {
       if (r != null) {
-        return emmiter(TerStateSuccess<Setting>([r]));
+        return emmiter(TerStateSuccess<Setting>(data: [r]));
       } else {
-        return emmiter(TerStateSuccess([Setting(email: user.email)]));
+        return emmiter(TerStateSuccess(data: [Setting(email: user.email)]));
       }
     });
   }
@@ -49,7 +49,7 @@ class SettingBloc extends Bloc<SettingEvent, TerState> {
 
     result.fold(
       (l) => emmiter(TerStateFailure(error: l.message, data: [event.data])),
-      (r) => emmiter(TerStateSuccess([r])),
+      (r) => emmiter(TerStateSuccess(data: [r])),
     );
   }
 }
