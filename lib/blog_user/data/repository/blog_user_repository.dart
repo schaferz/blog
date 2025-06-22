@@ -23,6 +23,34 @@ class BlogUserRepository with TerBlocRepository<BlogUser> {
     }
   }
 
+  /// Szerkesztés mentése.
+  Future<Either<Failure, Unit>> saveEdit(BlogUser model) async {
+    try {
+      final json = model.toJson();
+
+      await _client.from('blog_user').upsert(json, onConflict: 'id').select();
+      applyEdit(model);
+
+      return right(unit);
+    } catch (e) {
+      addError(e);
+      rethrow;
+    }
+  }
+
+  /// Törlés.
+  Future<Either<Failure, Unit>> delete(BlogUser model) async {
+    try {
+      await _client.from('blog_user').delete().eq('id', model.id!);
+      applyDelete(model);
+
+      return right(unit);
+    } catch (e) {
+      addError(e);
+      rethrow;
+    }
+  }
+
   @override
   BlogUser fromJson(Map<String, dynamic> jsonData) {
     return BlogUser.fromJson(jsonData);

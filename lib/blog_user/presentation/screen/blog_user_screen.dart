@@ -3,8 +3,7 @@ import 'package:blog/blog_user/data/entity/blog_user.dart';
 import 'package:blog/blog_user/data/repository/blog_user_repository.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_bloc.dart';
 import 'package:blog/blog_user/presentation/bloc/blog_user_event.dart';
-import 'package:blog/blog_user/presentation/screen/blog_user_insert_screen.dart';
-import 'package:blog/core/config/route/no_transition_page_route.dart';
+import 'package:blog/blog_user/presentation/widget/blog_user_edit_form.dart';
 import 'package:blog/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,8 +24,8 @@ class BlogUserScreen extends StatelessWidget {
       repository: (context) => BlogUserRepository(client: getIt<SupabaseClient>()),
       bloc: (context) => BlogUserBloc.init(context),
       child: TerStateHandler<BlogUserBloc, BlogUser>(
-        layout: (context, state, content) => AuthLayoutWidget(main: content),
-        builder: (context, data) => TerCard(
+        layoutBuilder: (context, state, content) => AuthLayoutWidget(main: content),
+        contentBuilder: (context, data) => TerCard(
           headerText: 'Blog felhasználók',
           maxWidth: 1200,
           child: TerDataTable(
@@ -36,30 +35,28 @@ class BlogUserScreen extends StatelessWidget {
               TerColumn(name: 'username', labelText: 'Felhasználónév'),
               TerColumn(name: 'display_name', labelText: 'Név', screen: tabletDesktop),
               TerColumn(name: 'active', labelText: 'Aktív', screen: tabletDesktop),
-              TerColumn(name: 'created_on', labelText: 'Létrehozva', screen: tabletDesktop),
+              TerColumn(name: 'email', labelText: 'E-mail', screen: tabletDesktop),
             ],
             data: data,
           ),
         ),
+        editBuilder: (context, data) => BlogUserEditForm(data: data),
       ),
     );
   }
 
   /// Hozzáadás esemény kezelése.
   handleInsert(BuildContext context, TerColumn column) {
-    final bloc = context.read<BlogUserBloc>();
-
-    Navigator.push(
-      context,
-      NoTransitionPageRoute(
-        builder: (context) => BlocProvider.value(value: bloc, child: BlogUserInsertScreen()),
-      ),
-    );
+    context.read<BlogUserBloc>().add(BlogUserInsertEvent());
   }
 
   /// Szerkesztés esemény kezelése.
-  handleEdit(BuildContext context, TerColumn column, JsonData data) {}
+  handleEdit(BuildContext context, TerColumn column, JsonData data) {
+    context.read<BlogUserBloc>().add(BlogUserEditEvent(data: BlogUser.fromJson(data)));
+  }
 
   /// Törlés esemény kezelése.
-  handleDelete(BuildContext context, TerColumn column, JsonData data) {}
+  handleDelete(BuildContext context, TerColumn column, JsonData data) {
+    context.read<BlogUserBloc>().add(BlogUserDeleteEvent(data: BlogUser.fromJson(data)));
+  }
 }

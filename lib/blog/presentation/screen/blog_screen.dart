@@ -7,6 +7,6 @@ class BlogScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AuthLayoutWidget(main: Text('Blog'));
+    return AuthLayoutWidget(main: Text('Fejlesztés alatt.'));
   }
 }

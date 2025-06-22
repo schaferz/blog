@@ -7,6 +7,7 @@ import 'package:ter_ui/ter_ui.dart';
 @immutable
 class BlogUser extends Equatable implements Model {
   /// Egyedi azonosító.
+  @override
   final int? id;
 
   /// Felhasználó neve.

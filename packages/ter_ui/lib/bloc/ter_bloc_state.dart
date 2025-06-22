@@ -7,22 +7,30 @@ class TerState {
   const TerState();
 }
 
-/// Blog felhasználó kezdő állapot.
+/// Lezdő állapot.
 final class TerStateInitial extends TerState {
   const TerStateInitial();
 }
 
-/// Blog felhasználó betöltés alatt.
+/// Betöltés alatt.
 final class TerStateLoading extends TerState {
   const TerStateLoading();
 }
 
-/// Blog felhasználó betöltve, megfelelő, sikeres állapotban van.
+/// Betöltve, megfelelő, sikeres állapotban van.
 final class TerStateSuccess<T extends Model> extends TerState {
   /// A betöltött Blog felhasználó.
   final List<T> data;
 
   const TerStateSuccess({required this.data});
+}
+
+/// Szerkesztés alatt.
+final class TerStateEditing<T extends Model> extends TerStateSuccess {
+  /// A modell melyet szerkesztünk.
+  final T model;
+
+  const TerStateEditing({required super.data, required this.model});
 }
 
 /// Sikertelen betöltés utáni állapot.

@@ -6,6 +6,7 @@ import 'package:ter_ui/ter_ui.dart';
 /// személyre szabó értékeket.
 class Setting extends Equatable implements Model {
   /// Egyedi azonosító.
+  @override
   final int? id;
 
   /// Felhasználót azonosító e-mail cím.

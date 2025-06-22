@@ -22,6 +22,9 @@ class TerTextFormField extends TerBaseFormField {
   /// Érvényesség ellenőrzéshez validator.
   final FormFieldValidator<String>? validator;
 
+  /// Textarea esetén a sorok száma.
+  final int? maxLines;
+
   const TerTextFormField({
     super.key,
     required super.name,
@@ -30,6 +33,7 @@ class TerTextFormField extends TerBaseFormField {
     super.enabled,
     this.decoration,
     this.validator,
+    this.maxLines,
   });
 
   @override
@@ -39,6 +43,7 @@ class TerTextFormField extends TerBaseFormField {
       enabled: enabled,
       decoration: _resolveDecoration(),
       validator: validator,
+      maxLines: maxLines,
     );
   }
 

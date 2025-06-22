@@ -30,15 +30,33 @@ final class BlogUserDataLoadedEvent extends BlogUserEvent {
 
 /// Blog felhasználó mentés esemény.
 class BlogUserInsertEvent extends BlogUserEvent {
+  const BlogUserInsertEvent();
+}
+
+/// Meglévő blog felhasználó szerkesztés esemény.
+class BlogUserEditEvent extends BlogUserEvent {
   /// A mentendő adat..
   final BlogUser data;
 
-  const BlogUserInsertEvent({required this.data});
+  const BlogUserEditEvent({required this.data});
+}
+
+/// Szerkesztés elvetése esemény.
+class BlogUserCancelEditEvent extends BlogUserEvent {
+  const BlogUserCancelEditEvent();
+}
+
+/// Meglévő blog felhasználó törlése esemény.
+class BlogUserDeleteEvent extends BlogUserEvent {
+  /// A mentendő adat.
+  final BlogUser data;
+
+  const BlogUserDeleteEvent({required this.data});
 }
 
 /// Blog felhasználó mentés esemény.
 class BlogUserSaveEvent extends BlogUserEvent {
-  /// A mentendő adat..
+  /// A mentendő adat.
   final BlogUser data;
 
   const BlogUserSaveEvent({required this.data});
